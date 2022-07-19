@@ -1,10 +1,10 @@
-package com.example.agendabootcamp.application
+package com.example.agendabootcamp.data.application
 
 import android.app.Application
-import com.example.agendabootcamp.DataBaseOperations
+import com.example.agendabootcamp.data.DataBaseRepository
 
 class TodoApplication : Application() {
-    var helperDb: DataBaseOperations? = null
+    var helperDb: DataBaseRepository? = null
         private set
 
     companion object {
@@ -14,6 +14,6 @@ class TodoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instace = this
-        helperDb = DataBaseOperations(this)
+        helperDb = DataBaseRepository(this)
     }
 }

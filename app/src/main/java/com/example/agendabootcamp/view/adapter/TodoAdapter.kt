@@ -1,4 +1,4 @@
-package com.example.agendabootcamp
+package com.example.agendabootcamp.view.adapter
 
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.agendabootcamp.R
+import com.example.agendabootcamp.data.model.TodoItem
 import kotlinx.android.synthetic.main.item_todo.view.*
 
 class TodoAdapter(
-    private val todos: MutableList<Todo>,
+    private val todos: MutableList<TodoItem>,
 ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -24,8 +26,13 @@ class TodoAdapter(
         )
     }
 
-    fun addTodo(todo: Todo) {
+    fun addTodo(todo: TodoItem) {
         todos.add(todo)
+        notifyItemInserted(todos.size - 1)
+    }
+
+    fun addAllTodos(todo: List<TodoItem>) {
+        todos.addAll(todo)
         notifyItemInserted(todos.size - 1)
     }
 

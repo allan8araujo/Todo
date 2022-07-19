@@ -1,12 +1,12 @@
-package com.example.agendabootcamp
+package com.example.agendabootcamp.data
 
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.agendabootcamp.data.model.TodoItem
 
-class DataBaseOperations(context: Context) :
-    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DataBaseRepository(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         const val DATABASE_NAME = "TodoItems.db"
         const val DATABASE_VERSION = 1
@@ -23,27 +23,23 @@ class DataBaseOperations(context: Context) :
         }
     }
 
-    fun salvarTodo(todo: Todo) {
+    fun saveItem(item: TodoItem) {
         val db = writableDatabase ?: return
-        db.execSQL(DataBaseInfo.SQL_INSERT_ON_TABLE)
+        db.execSQL(DatabaseDao().insert(item))
         db.close()
     }
 
-    fun buscarTodos(busca: String): List<Todo> {
+    fun searchItem(busca: String): List<TodoItem> {
         val db = readableDatabase ?: return emptyList()
-        var lista = mutableListOf<Todo>()
-        var cursor: Cursor =
-            db.rawQuery(DataBaseInfo.SQL_SELECT_ALL, arrayOf()) ?: return emptyList()
-        if (cursor == null) {
-            db.close()
-            return emptyList()
-        }
+        val lista = mutableListOf<TodoItem>()
+        val cursor: Cursor =
+            db.rawQuery(DatabaseDao().listAll(), arrayOf()) ?: return emptyList()
         while (cursor.moveToNext()) {
-            var ParaFazer = Todo(
+            val item = TodoItem(
                 cursor.getString(cursor.getColumnIndexOrThrow(DataBaseInfo.TableInfo.COLUMN_NAME)),
                 false
             )
-            lista.add(ParaFazer)
+            lista.add(item)
         }
         db.close()
         return lista

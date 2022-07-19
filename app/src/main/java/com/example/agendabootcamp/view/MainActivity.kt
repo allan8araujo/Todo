@@ -1,13 +1,15 @@
-package com.example.agendabootcamp
+package com.example.agendabootcamp.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.agendabootcamp.application.TodoApplication
+import com.example.agendabootcamp.R
+import com.example.agendabootcamp.view.adapter.TodoAdapter
+import com.example.agendabootcamp.data.model.TodoItem
+import com.example.agendabootcamp.data.application.TodoApplication
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private var adapter: TodoAdapter? = null
     private lateinit var todoAdapter: TodoAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,19 +20,22 @@ class MainActivity : AppCompatActivity() {
         rvTodoItems.layoutManager = LinearLayoutManager(this)
 
         btnAddTodoList.setOnClickListener {
-            TodoApplication.instace.helperDb?.salvarTodo(Todo("0", false))
+            //TodoApplication.instace.helperDb
             val todoTitle = etTodoTitle.text.toString()
+            TodoApplication.instace.helperDb?.saveItem(TodoItem(todoTitle, false))
             if (todoTitle.isNotEmpty()) {
-                val todo = Todo(todoTitle, false)
+                val todo = TodoItem(todoTitle, false)
                 todoAdapter.addTodo(todo)
                 etTodoTitle.text.clear()
             }
         }
 
         btnRefresh.setOnClickListener {
-            var listaFiltrada: List<Todo>
+            val listaFiltrada: List<TodoItem>
             try {
-                listaFiltrada = TodoApplication.instace.helperDb?.buscarTodos("") ?: mutableListOf()
+                listaFiltrada = TodoApplication.instace.helperDb?.searchItem("") ?: mutableListOf()
+
+                todoAdapter.addAllTodos(listaFiltrada)
             } catch (ex: Exception) {
                 ex.printStackTrace()
             }

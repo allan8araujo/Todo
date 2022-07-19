@@ -1,17 +1,13 @@
-package com.example.agendabootcamp
+package com.example.agendabootcamp.data
 
 import android.provider.BaseColumns
 
 object DataBaseInfo {
     const val SQL_CREATE_TABLE_QUERY =
         "CREATE TABLE ${TableInfo.TABLE_NAME}(" +
-            "${BaseColumns._ID} INTEGER PRIMARY KEY, " +
+            "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "${TableInfo.COLUMN_NAME} TEXT)"
 
-    const val SQL_INSERT_ON_TABLE = "INSERT INTO ${TableInfo.TABLE_NAME}" +
-        "(${BaseColumns._ID},${TableInfo.COLUMN_NAME}) VALUES ('1','TESTE')"
-
-    const val SQL_SELECT_ALL = "SELECT * FROM ${TableInfo.TABLE_NAME}"
 
     const val SQL_DROP_TABLE_QUERY = "DROP TABLE IF EXISTS ${TableInfo.TABLE_NAME}"
 
