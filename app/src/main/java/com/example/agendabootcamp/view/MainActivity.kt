@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agendabootcamp.R
-import com.example.agendabootcamp.view.adapter.TodoAdapter
-import com.example.agendabootcamp.data.model.TodoItem
 import com.example.agendabootcamp.data.application.TodoApplication
+import com.example.agendabootcamp.data.model.TodoItem
+import com.example.agendabootcamp.view.adapter.TodoAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         rvTodoItems.layoutManager = LinearLayoutManager(this)
 
         btnAddTodoList.setOnClickListener {
-            //TodoApplication.instace.helperDb
+            // TodoApplication.instace.helperDb
             val todoTitle = etTodoTitle.text.toString()
             TodoApplication.instace.helperDb?.saveItem(TodoItem(todoTitle, false))
             if (todoTitle.isNotEmpty()) {
