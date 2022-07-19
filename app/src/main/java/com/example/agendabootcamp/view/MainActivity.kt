@@ -1,15 +1,22 @@
 package com.example.agendabootcamp.view
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.agendabootcamp.R
 import com.example.agendabootcamp.data.application.TodoApplication
 import com.example.agendabootcamp.data.model.TodoItem
 import com.example.agendabootcamp.view.adapter.TodoAdapter
+import com.example.agendabootcamp.viewmodel.ToDoFactory
+import com.example.agendabootcamp.viewmodel.ToDosViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private val db = TodoApplication.instace.helperDb
+    private val viewmodel: ToDosViewModel by viewModels {
+        ToDoFactory(db)
+    }
     private lateinit var todoAdapter: TodoAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         btnAddTodoList.setOnClickListener {
             // TodoApplication.instace.helperDb
             val todoTitle = etTodoTitle.text.toString()
-            TodoApplication.instace.helperDb?.saveItem(TodoItem(todoTitle, false))
+            viewmodel.insertItem(TodoItem(todoTitle, false))
             if (todoTitle.isNotEmpty()) {
                 val todo = TodoItem(todoTitle, false)
                 todoAdapter.addTodo(todo)
