@@ -1,16 +1,14 @@
 package com.example.agendabootcamp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.agendabootcamp.data.DataBaseRepository
+import com.example.agendabootcamp.data.DataBaseTodo
 import com.example.agendabootcamp.data.model.TodoItem
 
-class ToDosViewModel(val db: DataBaseRepository?) : ViewModel() {
-    init {
-        searchItem()
-    }
+class ToDosViewModel(val db: DataBaseTodo?) : ViewModel() {
 
-    var livelist: MutableLiveData<MutableList<TodoItem>>? = null
+    val livelist = MutableLiveData<List<TodoItem>>()
 
     fun insertItem(item: TodoItem) {
         db?.saveItem(item)
@@ -18,7 +16,10 @@ class ToDosViewModel(val db: DataBaseRepository?) : ViewModel() {
 
     fun searchItem() {
         val listFromDb = db?.searchAllItens()
-        livelist?.value = listFromDb?.toMutableList()
+        livelist.value = listFromDb
+        livelist.value?.forEach {
+            Log.i(it.title, "")
+        }
     }
 
     fun deleteItem(item: TodoItem) {

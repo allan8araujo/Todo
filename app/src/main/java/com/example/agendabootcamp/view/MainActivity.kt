@@ -25,11 +25,10 @@ class MainActivity : AppCompatActivity() {
 
         rvTodoItems.adapter = todoAdapter
         rvTodoItems.layoutManager = LinearLayoutManager(this)
-
-        viewModel.livelist?.observe(this){
-            todoAdapter.deleteAllTodos()
+        viewModel.livelist.observe(this) {
             todoAdapter.addAllTodos(it)
         }
+        viewModel.searchItem()
 
         btnAddTodoList.setOnClickListener {
             val todoTitle = etTodoTitle.text.toString()
