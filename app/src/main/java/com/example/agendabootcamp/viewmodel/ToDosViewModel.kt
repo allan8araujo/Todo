@@ -7,7 +7,7 @@ import com.example.agendabootcamp.data.model.TodoItem
 
 class ToDosViewModel(val db: DataBaseRepository?) : ViewModel() {
     init {
-        searchItem(null)
+        searchItem()
     }
 
     var livelist: MutableLiveData<MutableList<TodoItem>>? = null
@@ -16,11 +16,9 @@ class ToDosViewModel(val db: DataBaseRepository?) : ViewModel() {
         db?.saveItem(item)
     }
 
-    fun searchItem(item: TodoItem?) {
-        item?.let {
-            val listFromDb = db?.searchItem(item.title)
-            livelist?.value = listFromDb?.toMutableList()
-        }
+    fun searchItem() {
+        val listFromDb = db?.searchAllItens()
+        livelist?.value = listFromDb?.toMutableList()
     }
 
     fun deleteItem(item: TodoItem) {

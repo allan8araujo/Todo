@@ -43,6 +43,11 @@ class TodoAdapter(
         notifyDataSetChanged()
     }
 
+    fun deleteAllTodos() {
+        todos.clear()
+        notifyDataSetChanged()
+    }
+
     private fun toggleStrikeThrough(tvTodoTitle: TextView, isChecked: Boolean) {
         if (isChecked) {
             tvTodoTitle.paintFlags = tvTodoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

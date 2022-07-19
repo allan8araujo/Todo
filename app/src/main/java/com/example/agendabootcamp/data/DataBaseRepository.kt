@@ -29,7 +29,7 @@ class DataBaseRepository(context: Context) : SQLiteOpenHelper(context, DATABASE_
         db.close()
     }
 
-    fun searchItem(busca: String): List<TodoItem> {
+    fun searchAllItens(): List<TodoItem> {
         val db = readableDatabase ?: return emptyList()
         val lista = mutableListOf<TodoItem>()
         val cursor: Cursor =

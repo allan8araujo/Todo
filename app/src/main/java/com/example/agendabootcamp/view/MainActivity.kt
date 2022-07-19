@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val db = TodoApplication.instace.helperDb
-    private val viewmodel: ToDosViewModel by viewModels {
+    private val viewModel: ToDosViewModel by viewModels {
         ToDoFactory(db)
     }
     private lateinit var todoAdapter: TodoAdapter
@@ -26,25 +26,18 @@ class MainActivity : AppCompatActivity() {
         rvTodoItems.adapter = todoAdapter
         rvTodoItems.layoutManager = LinearLayoutManager(this)
 
+        viewModel.livelist?.observe(this){
+            todoAdapter.deleteAllTodos()
+            todoAdapter.addAllTodos(it)
+        }
+
         btnAddTodoList.setOnClickListener {
-            // TodoApplication.instace.helperDb
             val todoTitle = etTodoTitle.text.toString()
-            viewmodel.insertItem(TodoItem(todoTitle, false))
+            viewModel.insertItem(TodoItem(todoTitle, false))
             if (todoTitle.isNotEmpty()) {
                 val todo = TodoItem(todoTitle, false)
                 todoAdapter.addTodo(todo)
                 etTodoTitle.text.clear()
-            }
-        }
-
-        btnRefresh.setOnClickListener {
-            val listaFiltrada: List<TodoItem>
-            try {
-                listaFiltrada = TodoApplication.instace.helperDb?.searchItem("") ?: mutableListOf()
-
-                todoAdapter.addAllTodos(listaFiltrada)
-            } catch (ex: Exception) {
-                ex.printStackTrace()
             }
         }
 
