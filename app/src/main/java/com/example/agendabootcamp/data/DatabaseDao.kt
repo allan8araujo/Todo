@@ -7,7 +7,7 @@ class DatabaseDao {
         "(${DataBaseInfo.TableInfo.COLUMN_NAME}) VALUES ('${item.title}')"
 
     fun delete(item: TodoItem) = "DELETE FROM ${DataBaseInfo.TableInfo.TABLE_NAME}" +
-        " WHERE TITLE = ${item.title}"
+        " WHERE 'TITLE' = '${item.title}'"
 
     fun listAll() = "SELECT * FROM ${DataBaseInfo.TableInfo.TABLE_NAME}"
 }
