@@ -30,6 +30,14 @@ class DataBaseTodo(context: Context) :
         db.close()
     }
 
+    fun deleteItem(listItem: List<TodoItem>) {
+        val db = writableDatabase ?: return
+        listItem.forEach { todoItem ->
+            db.execSQL(DatabaseDao().delete(todoItem))
+        }
+        db.close()
+    }
+
     fun searchAllItens(): List<TodoItem> {
         val db = readableDatabase ?: return emptyList()
         val lista = mutableListOf<TodoItem>()

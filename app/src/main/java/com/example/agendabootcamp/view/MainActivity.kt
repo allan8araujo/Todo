@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnDeleteTodoList.setOnClickListener {
+            val selectedItems =  todoAdapter.listAllTodo()
+            viewModel.deleteItem(selectedItems)
             todoAdapter.deleteDoneTodos()
         }
     }

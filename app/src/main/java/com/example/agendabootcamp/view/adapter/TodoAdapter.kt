@@ -26,6 +26,12 @@ class TodoAdapter(
         )
     }
 
+    fun listAllTodo(): List<TodoItem> {
+        return todos.filter { todoItem ->
+            todoItem.isChecked
+        }
+    }
+
     fun addTodo(todo: TodoItem) {
         todos.add(todo)
         notifyItemInserted(todos.size - 1)
