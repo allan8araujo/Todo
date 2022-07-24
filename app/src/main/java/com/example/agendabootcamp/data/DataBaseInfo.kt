@@ -12,7 +12,6 @@ object DataBaseInfo {
     const val SQL_DROP_TABLE_QUERY = "DROP TABLE IF EXISTS ${TableInfo.TABLE_NAME}"
 
     object TableInfo : BaseColumns {
-        // automaticamente assigna um id
         const val TABLE_NAME = "TodoItemsTable"
         const val COLUMN_NAME = "itemName"
     }
