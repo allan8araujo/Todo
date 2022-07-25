@@ -8,3 +8,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "todolist"
 include ':app'
+include ':database'
+include ':abstractions'
